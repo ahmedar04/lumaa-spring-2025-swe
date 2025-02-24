@@ -119,7 +119,7 @@ The application allows users to:
 2. Create a `.env` file in the backend directory with the following content (adjust credentials as needed):
    ```env
    DATABASE_URL=postgresql://postgres:yourPassword@localhost:5432/taskdb
-   JWT_SECRET=your_jwt_secret_here
+   JWT_SECRET=G9s8F3kH1lZ7mQ2vB4rT6yJ0pD8wS3eL5xA7nC1oI9uE4tV2qR8X7p2K3L9o0m1Q
    PORT=5001
    ```
 3. Install backend dependencies:
@@ -166,7 +166,7 @@ The application allows users to:
 - **Tasks:**  
   Test the tasks endpoints (`GET`, `POST`, `PUT`, `DELETE` at `http://localhost:5001/tasks`) by including an `Authorization` header:
   ```
-  Authorization: Bearer <your_jwt_token>
+  Authorization: Bearer G9s8F3kH1lZ7mQ2vB4rT6yJ0pD8wS3eL5xA7nC1oI9uE4tV2qR8X7p2K3L9o0m1Q
   ```
 
 ### Frontend Testing
