@@ -18,6 +18,7 @@ For a hassle‑free setup, you can use Docker Compose to run PostgreSQL, the bac
    - Replace `yourPassword` with your desired PostgreSQL password.
    - Ensure the environment variables in the file (such as `DATABASE_URL` and `JWT_SECRET`) are correct.
 
+
 3. **Starting the Stack:**  
    From the repository's root directory, run:
    ```bash
@@ -27,6 +28,30 @@ For a hassle‑free setup, you can use Docker Compose to run PostgreSQL, the bac
    - **db:** PostgreSQL (mapped to host port 5433 if 5432 is in use)
    - **backend:** Node.js/Express API (accessible at http://localhost:5001)
    - **frontend:** React app served via Nginx (accessible at http://localhost:3000)
+
+  
+After starting the containers, you must create the tables by running the following SQL commands:
+
+1. Connect to the PostgreSQL container:
+   ```bash
+   docker exec -it taskmanager_db psql -U postgres -d taskdb
+   ```
+2. At the `taskdb=#` prompt, run:
+   ```sql
+   CREATE TABLE users (
+       id SERIAL PRIMARY KEY,
+       username VARCHAR(255) UNIQUE NOT NULL,
+       password VARCHAR(255) NOT NULL
+   );
+
+   CREATE TABLE tasks (
+       id SERIAL PRIMARY KEY,
+       title VARCHAR(255) NOT NULL,
+       description TEXT,
+       is_complete BOOLEAN DEFAULT false,
+       user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+   );
+   ```
 
 4. **Stopping the Stack:**  
    To stop all services, run:
