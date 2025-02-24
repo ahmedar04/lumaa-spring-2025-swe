@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: taskmanager_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yourPassword
+      POSTGRES_DB: taskdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: taskmanager_backend
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      DATABASE_URL: "postgresql://postgres:password@db:5432/taskdb"
+      JWT_SECRET: "G9s8F3kH1lZ7mQ2vB4rT6yJ0pD8wS3eL5xA7nC1oI9uE4tV2qR8X7p2K3L9o0m1Q"
+      PORT: 5001
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: taskmanager_frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  db-data:
